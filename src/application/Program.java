@@ -32,11 +32,22 @@ public class Program {
 		list2.forEach(System.out::println);
 		qtdLinhas(list2.size());
 		
-		System.out.println("\n=== TESTE: 4 - Insert Seller ====");
-		Seller selnew = new Seller(null,"IGOR MATHEUS","igorAranha13@gmail.com",new Date(),3560.0, dep);
-		sellerDao.insert(selnew);
-		System.out.println("New Seller Inserted, Seller id is : "+selnew.getId());
-
+		/*
+		 * System.out.println("\n=== TESTE: 4 - Insert Seller ===="); Seller selnew =
+		 * new Seller(null,"IGOR MATHEUS","igorAranha13@gmail.com",new Date(),3560.0,
+		 * dep); sellerDao.insert(selnew);
+		 * System.out.println("New Seller Inserted, Seller id is : "+selnew.getId());
+		 */
+		
+		System.out.println("\n=== TESTE: 5 - Update Seller ====");
+		Seller selUpdate = new Seller(30,"IGOR MATHEUS Eloi","igorAdm@gmail.com",new Date(),7000.0, dep);
+		sellerDao.update(selUpdate);
+		Seller sel =sellerDao.findById(30);
+		System.out.println("Update finish, new date of seller: \n"+sel);
+		
+		System.out.println("\n=== TESTE: 5 - Delete Seller by id ====");
+		
+		sellerDao.deleteById(30);
 	}
 
 	public static void qtdLinhas(Integer size) {

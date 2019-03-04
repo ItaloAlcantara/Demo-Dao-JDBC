@@ -53,14 +53,14 @@ public class SellerDaoJDBC implements SellerDao {
 					sell.setId(id);
 				}
 
-			}else {
+			} else {
 				throw new DBException("ERROR: No Rows Affected");
 			}
 
 		} catch (SQLException e) {
 			throw new DBException(e.getMessage());
 		}
-		
+
 		finally {
 			DB.closeStatement(ps);
 			DB.closeResultSet(rs);
@@ -68,13 +68,51 @@ public class SellerDaoJDBC implements SellerDao {
 	}
 
 	@Override
-	public void update(Seller obj) {
+	public void update(Seller sell) {
+		PreparedStatement ps = null;
 
+		try {
+			ps = conn.prepareStatement(
+					"UPDATE SELLER SET NAME= ? , EMAIL=? ,BaseSalary=?,DepartmentId=?,BirthDate=?  where id=?");
+
+			ps.setString(1, sell.getName());
+			ps.setString(2, sell.getEmail());
+			ps.setDouble(3, sell.getBaseSalary());
+			ps.setInt(4, sell.getDepartment().getId());
+			ps.setDate(5, new java.sql.Date(sell.getBirthDate().getTime()));
+			ps.setInt(6, sell.getId());
+
+			int rowsAffected = ps.executeUpdate();
+
+			if (rowsAffected < 0) {
+				throw new DBException("ERROR: No Rows Affected");
+			}
+		} catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		} finally {
+			DB.closeStatement(ps);
+
+		}
 	}
 
 	@Override
 	public void deleteById(Integer id) {
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement("delete from seller where id=?");
+			ps.setInt(1, id);
+			
+			int rowsAffected = ps.executeUpdate();
+			if (rowsAffected < 0) {
+				throw new DBException("ERROR: No Rows Affected");
+			}
 
+		} catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(ps);
+		}
 	}
 
 	@Override
