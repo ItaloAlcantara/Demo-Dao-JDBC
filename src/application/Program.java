@@ -48,6 +48,7 @@ public class Program {
 		System.out.println("\n=== TESTE: 5 - Delete Seller by id ====");
 		
 		sellerDao.deleteById(30);
+		
 	}
 
 	public static void qtdLinhas(Integer size) {
